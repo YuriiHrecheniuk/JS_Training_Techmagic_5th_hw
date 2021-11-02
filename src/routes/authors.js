@@ -49,18 +49,46 @@ router.get('/:id/posts', (req, res, next) => {
   res.json(req.author.posts);
 })
 
-// todo: get one post by author
 router.get('/:id/posts/:postId', (req, res, next) => {
   const post = req.author.posts.find(post => post.id == req.params.postId);
 
   post ?
     res.json(post) :
-    next(createError(500, `The user has only ${req.author.posts.length} posts.`));
+    next(createError(500, `The user has only ${req.author.posts.length} post(-s).`));
+})
+
+router.post('/', (req, res, next) => {
+  if (!req.body.name) {
+    next(createError(400, 'Name is required.'));
+    return;
+  }
+
+  authors.push({
+    id: authors.length + 1,
+    name: req.body.name,
+    posts: []
+  });
+
+  res.send('Author added successfully.');
+})
+
+router.delete('/:id', (req, res) => {
+  const authorIndex = authors.findIndex(author => author.id == req.params.id);
+
+  authors.splice(authorIndex, 1);
+  res.send(`Author ${req.author.name} with id ${req.params.id} deleted.`);
+})
+
+router.put('/:id', (req, res, next) => {
+  if (!req.body.newName) {
+    next(createError(400, 'New name is required.'));
+    return;
+  }
+
+  const oldName = req.author.name;
+
+  req.author.name = req.body.newName;
+  res.send(`Author ${oldName} with id ${req.author.id} is now ${req.body.newName}.`);
 })
 
 module.exports = router;
-
-
-// todo: add author
-// todo: remove author
-// todo: rename author
