@@ -4,12 +4,12 @@
 The task was to create a simple server for *“authors with posts list”* application API using **Node.js + Express**.
 
 API provides the ability to perform the following actions:
- - **add author** - *id* automatically generated (so there is no need to write it in params) - *POST /authors* + `{ "name": [name] }`
- - **remove author** - *DELETE /authors/[id]*
+ - **add author** - *id* automatically generated (so there is no need to write it in params) - *POST /authors* + `{ "name": {name} }`
+ - **remove author** - *DELETE /authors/{id}*
  - **get all existing authors** - *GET /authors*
- - **rename author** - *PUT /authors/[id]* + `{ "newName": [new name] }`
- - **get posts by author** - *GET /authors/[id]/posts*
- - **get one specific post by author** - *GET /authors/[id]/posts/[postId]*
+ - **rename author** - *PUT /authors/{id}* + `{ "newName": {new name} }`
+ - **get posts by author** - *GET /authors/{id}/posts*
+ - **get one specific post by author** - *GET /authors/{id}/posts/{postId}*
 
 Author object example:
 ```
